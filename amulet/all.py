@@ -255,21 +255,10 @@ TB = Twinfold_Bonds
 
 class Summer_Paladyns(Amulet):  
     atk = 64
-    a = [('')]
+    a = [('def_c_energy', 1)]
     def __init__(this, c):
         if c.wt == 'axe':
-            this.a = [('sd', 0.40)]
-
-    def dc_energy(this, e):
-        e = this.adv.Event('add_energy')
-        e.name = 'self'
-        e()
-
-    def oninit(this, adv):
-        Amulet.oninit(this, adv)
-        this.adv = adv
-        adv.Listener('defchain',this.dc_energy)
-
+            this.a = [('def_c_energy', 1), ('sd', 0.4)]
 
 class The_Shining_Overlord(Amulet):
     atk = 65
@@ -283,27 +272,17 @@ TSO = The_Shining_Overlord
 
 class Halidom_Grooms(Amulet):
     atk = 50
-    a = [('bt', 0.20)]
-
-    def dc_energy(this, e):
-        e = this.adv.Event('add_energy')
-        e.name = 'self'
-        e()
-
-    def oninit(this, adv):
-        Amulet.oninit(this, adv)
-        this.adv = adv
-        adv.Listener('defchain',this.dc_energy)
+    a = [('bt', 0.2), ('def_c_energy', 1)]
 HG = Halidom_Grooms
 
 
-class Beach_Batkle(Amulet):
+class Beach_Battle(Amulet):
     atk = 50
-    a = [('bt', 0.20)]
+    a = [('bt', 0.2)]
     def __init__(this, c):
         if c.ele == 'water':
-            this.a = [('bt', 0.20), ('sp', 0.07)]
-BB = Beach_Batkle
+            this.a = [('bt', 0.2), ('sp', 0.07)]
+BB = Beach_Battle
 
 
 class The_Petal_Queen(Amulet):
@@ -354,22 +333,45 @@ class Beautiful_Nothingness(Amulet):
     a = [('atk', 0.10, 'hp70'),('cc', 0.05)]
 BN = Beautiful_Nothingness
 
-class Resurgent_Despair(Amulet):
-    atk = 64
-    a = [('sp', 0.06)]
-    def fs_proc(this, e):
-        this.o_fs_proc(e)
-        if this.charges > 0:
-            this.adv.charge_p('Resurgent_Despair','25%')
-            this.charges -= 1
+class Castle_Cheer_Corps(Amulet):
+    atk = 62
+    a = [('sp', 0.06), ('fc', '25%')]
+CCC = Castle_Cheer_Corps
 
-    def oninit(this, adv):
-        Amulet.oninit(this, adv)
-        this.charges = 3
-        this.adv = adv
-        this.o_fs_proc = adv.fs_proc
-        adv.fs_proc = this.fs_proc
-RD = Resurgent_Despair
+class Howling_to_the_Heavens(Amulet):
+    atk = 65
+    a = [('cd', 0.2)]
+    def __init__(this, c):
+        if c.ele == 'shadow':
+            this.a = [('cd', 0.2), ('cc', 0.12, 'hit15')]
+HttH = Howling_to_the_Heavens
+
+class Spirit_of_the_Season(Amulet):
+    atk = 65
+    a = [('k', 0.2, 'paralysis'), ('atk', 0.15, 'hp100')]
+SotS = Spirit_of_the_Season
+
+class From_Whence_He_Comes(Amulet):
+    atk = 50
+    a = [('bt', 0.2), ('prep', 0.25)]
+FWHC = From_Whence_He_Comes
+
+class A_New_Years_Battle(Amulet):
+    atk = 52
+    a = [('atk', 0.08, 'hp70'), ('cc', 0.1, 'hit15')]
+ANYB = A_New_Years_Battle
+
+class A_Game_of_Cat_and_Boar(Amulet):
+    atk = 33
+    def __init__(this, c):
+        if c.ele == 'light':
+            this.a = [('bt', 0.25)]
+AGoCaB = A_Game_of_Cat_and_Boar
+
+class The_Wyrmclan_Duo(Amulet):
+    atk = 65
+    a = [('cd', 0.17, 'hp70'), ('sd', 0.3)]
+TWD = The_Wyrmclan_Duo
 
 #amulets = []
 #for k in list(globals()):

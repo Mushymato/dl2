@@ -73,10 +73,11 @@ class def_c_energy(Ability):
         this.v = v
 
     def __call__(this):
-        this.host.Listener('def')(c_energy)
+        this.host.Listener('buff')(this.c_energy)
     
     def c_energy(this, e):
-        this.host.Energy.self(1)
+        if e.btype == 'def':
+            this.host.Energy.self(1)
 
 class afflic_c_selfatk(Ability):
     def __init__(this, name, v, atype):
@@ -213,18 +214,21 @@ class dc(Ability):
         this.name = name
         this.v = v
         this.idx = 0
+        print(name)
         if v == 1:
-            buff = [0.04,0.10,0.20]
+            this.buff = [0.04,0.10,0.20]
         elif v == 2:
-            buff = [0.05,0.13,0.25]
+            this.buff = [0.05,0.13,0.25]
         elif v == 3:
-            buff = [0.06,0.15,0.30]
+            this.buff = [0.06,0.15,0.30]
+        elif v == 4:
+            this.buff = [0.10,0.25,0.40]
 
     def __call__(this):
         this.host.Listener('dragon')(this.d_atk)
     
     def d_atk(this, e):
-        if this.idx <= 2:
+        if this.idx < len(this.buff):
             this.host.Selfbuff('dragon_claw', this.buff[this.idx])(-1)
             this.idx+=1
 

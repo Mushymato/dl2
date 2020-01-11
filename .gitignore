@@ -1,5 +1,6 @@
 _acl/
 tags
+new_slots
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

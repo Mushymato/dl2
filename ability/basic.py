@@ -80,16 +80,16 @@ class cc(Ability):
     def __init__(this, name, v, c=None):
         this.v = v
         if c == 'hp70':
-            this.condi = 'hp>70%'
-            this.passive = this.host.Passive('%s_cc'%name, v, 'cc')
+            if this.host.condition('hp>70%'):
+                this.passive = this.host.Passive('%s_cc'%name, v, 'cc')
         elif c == 'hp100':
-            this.condi = 'hp=100%'
-            this.passive = this.host.Passive('%s_cc'%name, v, 'cc')
+            if this.host.condition('fullhp'):
+                this.passive = this.host.Passive('%s_cc'%name, v, 'cc')
         elif c == 'hit15':
-            this.condi = 'hit>=15'
-            this.on = 0
-            this.passive = this.host.Passive('%s_cc'%name, 0, 'cc')
-            this.host.Listener('hit')(this.l_hit)
+            if this.host.condition('flurry'):
+                this.on = 0
+                this.passive = this.host.Passive('%s_cc'%name, 0, 'cc')
+                this.host.Listener('hit')(this.l_hit)
         else:
             this.passive = this.host.Passive('%s_cc'%name, v, 'cc')
 
@@ -106,21 +106,26 @@ class cc(Ability):
 
 
     def __call__(this):
-        this.passive()
+        if this.passive:
+            this.passive()
 
 
 class cd(Ability):
     def __init__(this, name, v, c=None):
         this.v = v
         if c == 'hp70':
-            condi = 'hp>70%'
+            if this.host.condition('hp>70%'):
+                this.passive = this.host.Passive('%s_cd'%name, v, 'cd')
         elif c == 'hp100':
-            condi = 'hp=100%'
-        this.passive = this.host.Passive('%s_cd'%name, v, 'cd')
+            if this.host.condition('fullhp'):
+                this.passive = this.host.Passive('%s_cd'%name, v, 'cd')
+        else:
+            this.passive = this.host.Passive('%s_cd'%name, v, 'cd')
 
 
     def __call__(this):
-        this.passive()
+        if this.passive:
+            this.passive()
 
 
 class sp(Ability):
@@ -139,7 +144,7 @@ class sp(Ability):
 class bt(Ability):
     def __init__(this, name, v):
         this.v = v
-        this.passive = this.host.Passive('%s_bt'%name, v, 'buff')
+        this.passive = this.host.Passive('%s_bt'%name, v, 'bt')
 
 
     def __call__(this):

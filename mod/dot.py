@@ -70,7 +70,7 @@ class _Dot():
         this._dmg.hit = 0
         dmgconf = {
                  'coef' : coef
-                ,'type' : 's'
+                ,'type' : 'sd'
                 }
         this.srcname = src.name
         this.dmgname = this._dmg.name

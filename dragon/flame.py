@@ -28,3 +28,9 @@ class Apollo(Dragon):
     atk = 126
     a = [('atk', 0.50),
          ('k', 0.20, 'burn')]
+
+
+class Kagutsuchi(Dragon):
+    ele = 'flame'
+    atk = 127
+    a = [('skill_link', 0.15, 'atk'), ('atk', 0.45)]

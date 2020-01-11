@@ -34,3 +34,7 @@ class Freyja(Dragon):
     a = [('sp', 0.35)]
 
 
+class Hastur(Dragon):
+    ele = 'wind'
+    atk = 127
+    a = [('skill_link', 0.15, 'atk'), ('atk', 0.45)]

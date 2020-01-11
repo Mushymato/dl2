@@ -26,6 +26,8 @@ class Condition(object):
             if ret != '':
                 ret += ' & '
             ret += i
+        if not this.if_condition:
+            ret = 'NOT '+ret
         return ret
 
 
@@ -47,8 +49,7 @@ class Condition(object):
 
 if __name__ == '__main__':
     a = Condition()
-    a.set()
-    print(a('test'))
-    print(a('test'))
+    print(a('test1'))
     print(a('test2'))
+    print(a('test3'))
     print(a)

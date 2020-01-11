@@ -322,7 +322,7 @@ class Character(object):
             if i == 'blade':
                 this.Passive('ex_blade',  0.10, 'atk', 'ex')()
             elif i == 'wand':
-                this.Passive('ex_wand',   0.15, 's',  'ex')()
+                this.Passive('ex_wand',   0.15, 'sd',  'ex')()
             elif i == 'dagger':
                 this.Passive('ex_dagger', 0.10, 'cc',  'p')()
             elif i == 'bow':
