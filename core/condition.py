@@ -26,7 +26,7 @@ class Condition(object):
             if ret != '':
                 ret += ' & '
             ret += i
-        if not this.if_condition:
+        if not this.if_condition and len(ret) > 0:
             ret = 'NOT '+ret
         return ret
 

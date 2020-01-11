@@ -148,12 +148,13 @@ class _Buff(object):
         return this._static.hostname
 
     def append(this, length):
-        this.t_buffend.timing += length
-        if this.log :
-            this.log(this.hostname(), this.name,
-                    '%s: %.2f'%(this.mod_type, this.get()),
-                    '%s %s append +%ss'%(this.group_name,
-                        this.bufftype, length))
+        if this.t_buffend.timing > 0:
+            this.t_buffend.timing += length
+            if this.log :
+                this.log(this.hostname(), this.name,
+                        '%s: %.2f'%(this.mod_type, this.get()),
+                        '%s %s append +%ss'%(this.group_name,
+                            this.bufftype, length))
 
     def get(this):
         if this._active:
@@ -458,6 +459,60 @@ class _Selfzone(_Buff):
 
     __call__ = on
 
+
+class ToggleBuff(object):
+    def __init__(self, Buff):
+        self.Buff = Buff
+
+        self.buff_dict = {}
+
+
+    def __call__(self, name, *args, **kwargs):
+        if name not in self.buff_dict:
+            self.buff_dict[name] = _ToggleBuff(self.Buff, name, *args, **kwargs)
+        return self.buff_dict[name]
+
+
+class _ToggleBuff():
+    bufftype = 'togglebuff'
+    def __init__(self, static, name, *args, **kwargs):
+        self.buffs = []
+        self.c_idx = None
+        for idx, b in enumerate(args[0]):
+            if not b:
+                self.buffs.append(None)
+            else:
+                wide = b[0]
+                value = b[1]
+                time = b[2]
+                buffarg = b[3:]
+                if wide == 'self':
+                    self.buffs.append((_Selfbuff(static, '{}_buff_{}'.format(name, idx+1), value, *buffarg), time))
+                elif wide == 'team':
+                    self.buffs.append((_Teambuff(static, '{}_buff_{}'.format(name, idx+1), value, *buffarg), time))
+
+    def on(self):
+        if self.c_idx is None:
+            self.c_idx = 0
+        else:
+            if self.buffs[self.c_idx]:
+                buff, _ = self.buffs[self.c_idx]
+                buff.off()
+            self.c_idx = (self.c_idx + 1) % len(self.buffs)
+        if self.buffs[self.c_idx]:
+            buff, time = self.buffs[self.c_idx]
+            return buff.on(time)
+        else:
+            return None
+
+    def get_buff_by_idx(self, idx):
+        if self.buffs[idx]:
+            buff, _ = self.buffs[idx]
+            return buff
+        else:
+            return None
+
+    __call__ = on
 
 
 if __name__ == '__main__':

@@ -52,3 +52,18 @@ class v534_flame_zephyr(Weapon):
     wt = 'blade'
     atk = 353
     a = [('k',0.2,'hms'), ('prep',0.5)]
+
+class Agito_Tyrfing(Weapon):
+    ele = ['flame']
+    wt = 'blade'
+    atk = 1636
+    s3 = {
+        'buff'  : ('toggle', -1, -1, [
+            ('self', 0.20, -1, 'atk'),
+            None # regen buff
+        ]),
+        'sp'    : 3000,
+        'stop'  : 1
+
+    } # Megingjörð (Blade)
+    a = []

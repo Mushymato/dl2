@@ -156,6 +156,9 @@ class Character(object):
         if not rootconf['condi'] :
             this.condition.unset()
 
+        # flag to control agito weapon s3
+        this.s3_buff_on = False
+
 
     # after settle down all config
     def character_init(this, conf_param=None):
@@ -353,6 +356,7 @@ class Character(object):
         this.Teambuff = Teambuff(this.Buff)
         this.Zonebuff = Zonebuff(this.Buff)
         this.Debuff = Debuff(this.Buff)
+        this.ToggleBuff = ToggleBuff(this.Buff)
 
         this.Action = Action(this, this.Dp)
         this.Skill = Skill(this)

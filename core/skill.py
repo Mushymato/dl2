@@ -214,6 +214,11 @@ class _Skill(object):
      #       this.host.target.Debuff(this.name, value, *buffarg)(time)
         elif wide == 'zone':
             this.host.Zonebuff(this.name, value, *buffarg)(time)
+        elif wide == 'toggle':
+            toggle = this.host.ToggleBuff(this.name, *buffarg)
+            toggle.on()
+            if this.name == 's3':
+                this.host.s3_buff_on = toggle.get_buff_by_idx(0).get()
         else:
             this.host.Buff(this.name, value, *buffarg)(time)
 

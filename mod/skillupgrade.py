@@ -33,8 +33,9 @@ class Skillupgrade(object):
             if this.log:
                 this.log(this.loghost, 'skill -')
 
-    def upgrade(this, duration):
-        this.buff.on(duration)
+    def upgrade(this, duration, buff_on=True):
+        if buff_on:
+            this.buff.on(duration)
         if this.level == 0:
             this.host.s1 = this.s_upgraded
             this.level = 1
